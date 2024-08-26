@@ -12,9 +12,9 @@ test1_patch_list = [
 ('splitter_1_2x2_p1','roadm_4_p1'),
 
 ('roadm_4_line', 'fiber_temp_100m'), 
-('fiber_temp_100m', 'roadm_3_line'), 
+('fiber_temp_100m', 'roadm_3_p1'), 
 
-('roadm_3_p1', 'fiber_7_510m') ,
+('roadm_3_line', 'fiber_7_510m') ,
 ('fiber_7_510m', 'roadm_7_line'),
 
 ('roadm_7_p1', 'roadm_7_p1'),
@@ -41,9 +41,9 @@ test1_patch_list = [
 ('roadm_5_p1', 'roadm_5_p1'),
 
 ('roadm_5_line', 'fiber_15_11895m'),
-('fiber_15_11895m', 'roadm_3_p1'),
+('fiber_15_11895m', 'roadm_3_line'),
 
-('roadm_3_line', 'fiber_temp_268m'), 
+('roadm_3_p1', 'fiber_temp_268m'), 
 ('fiber_temp_268m', 'roadm_4_line'), 
 
 ('roadm_4_p1', 'tf_1'),
