@@ -3,6 +3,56 @@ CHANNEL_WIDTH = 50
 CHANNEL_SPACING = 50
 wdm_channel_list = list(range(1,96))
 
+test1_patch_list = [
+('tf_1', 'splitter_1_2x2_p1'),
+('arof_sig', 'splitter_1_2x2_p2'),
+('tf_2', 'roadm_4_p2'), 
+('tf_3', 'roadm_4_p3'), 
+
+('splitter_1_2x2_p1','roadm_4_p1'),
+
+('roadm_4_line', 'fiber_temp_100m'), 
+('fiber_temp_100m', 'roadm_3_line'), 
+
+('roadm_3_p1', 'fiber_7_510m') ,
+('fiber_7_510m', 'roadm_7_line'),
+
+('roadm_7_p1', 'roadm_7_p1'),
+
+('roadm_7_line', 'fiber_19_12646m'),
+('fiber_19_12646m', 'roadm_8_line'),
+
+('roadm_8_p1', 'roadm_8_p1'),
+
+('roadm_8_line', 'fiber_18_25220m'),
+('fiber_18_25220m', 'roadm_9_line'),
+
+('roadm_9_p1', 'roadm_9_p1'),
+
+('roadm_9_line', 'fiber_22_25332m'),
+('fiber_22_25332m', 'roadm_6_line'),
+
+('roadm_6_p1', 'roadm_6_p1'),
+
+('roadm_6_line', 'fiber_17_665m'),
+('fiber_17_665m', 'fiber_p1b_394m'),
+('fiber_p1b_394m', 'roadm_5_line'),
+
+('roadm_5_p1', 'roadm_5_p1'),
+
+('roadm_5_line', 'fiber_15_11895m'),
+('fiber_15_11895m', 'roadm_3_p1'),
+
+('roadm_3_line', 'fiber_temp_268m'), 
+('fiber_temp_268m', 'roadm_4_line'), 
+
+('roadm_4_p1', 'tf_1'),
+('roadm_4_p2', 'tf_2'), 
+('roadm_4_p3', 'tf_3'), 
+
+# ('roadm_4_p4', 'PH-AROF-1'), ## need to add 2 # disabling this for now
+]
+
 def nm_to_ghz(wavelength_nm):
     # Accurate speed of light in meters per second
     speed_of_light = 299_792_458  # m/s
@@ -51,6 +101,7 @@ def generate_wide_channel_mux(roadm, channel_list, input_port, wss_id=1, output_
     total_loss = float(loss) + (channel_additional_attenuations if channel_additional_attenuations is not None else 0.0)
 
     connection_id = str(channel_list[0])
+    print(wss_id, connection_id, 'in-service', blocked_,input_port, output_port,str(start_freq),str(end_freq), '{:.2f}'.format(total_loss),  'CH' + connection_id)
     cur_conn = roadm.WSSConnection(
         wss_id, connection_id, 'in-service', blocked_,
         input_port, output_port,
