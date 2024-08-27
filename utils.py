@@ -4,14 +4,24 @@ CHANNEL_SPACING = 50
 wdm_channel_list = list(range(1,96))
 
 test1_patch_list = [
-('tf_1', 'splitter_1_2x2_p1'),
-('arof_sig', 'splitter_1_2x2_p2'),
+
+('arof_sig', 'splitter_1_2x2_p1'), # this splits in 2. One goes to tf1, other goes to tf3
+
+('tf_1', 'splitter_2_2x2_p1'),
+('splitter_1_2x2_p1', 'splitter_2_2x2_p2'),
+('splitter_2_2x2_p1', 'roadm_4_p1'),
+
 ('tf_2', 'roadm_4_p2'), 
-('tf_3', 'roadm_4_p3'), 
 
-('splitter_1_2x2_p1','roadm_4_p1'),
+('tf_3', 'splitter_3_2x2_p1'),
+('splitter_1_2x2_p2', 'splitter_3_2x2_p2'),
+('splitter_3_2x2_p1', 'roadm_4_p3'), 
 
-('roadm_4_line', 'fiber_temp_100m'), 
+('roadm_4_line', 'splitter_4_2x2_p1'),
+('splitter_4_2x2_p1', 'fiber_temp_100m'), 
+
+# 'splitter_4_2x2_p2' can be used for backward path
+
 ('fiber_temp_100m', 'roadm_3_p1'), 
 
 ('roadm_3_line', 'fiber_7_510m') ,
@@ -48,9 +58,8 @@ test1_patch_list = [
 
 ('roadm_4_p1', 'tf_1'),
 ('roadm_4_p2', 'tf_2'), 
-('roadm_4_p3', 'tf_3'), 
-
-# ('roadm_4_p4', 'PH-AROF-1'), ## need to add 2 # disabling this for now
+('roadm_4_p3', 'tf_3'),
+('roadm_4_p4', 'arof_sig'), 
 ]
 
 def nm_to_ghz(wavelength_nm):
@@ -232,14 +241,14 @@ def operator_flex_grid_demux_connections(roadm, drop_list, wss_id=2, input_port=
         wss_connections_dwdm.append(cur_conn)
     return wss_connections_dwdm
 
-def operator_roadm_config(roadm, add_list, drop_list, open_channels=[],):
+# def operator_roadm_config(roadm, add_list, drop_list, open_channels=[],):
 
-    ## MUX configuration
-    conn_list = operator_flex_grid_mux_connections(roadm, add_list, open_channels=open_channels)
-    roadm.wss_delete_connection(1, 'all')
-    roadm.wss_add_connections(conn_list)
+#     ## MUX configuration
+#     conn_list = operator_flex_grid_mux_connections(roadm, add_list, open_channels=open_channels)
+#     roadm.wss_delete_connection(1, 'all')
+#     roadm.wss_add_connections(conn_list)
 
-    ## DEMUX configuration
-    conn_list = operator_flex_grid_demux_connections(roadm, drop_list, open_channels=open_channels)
-    roadm.wss_delete_connection(2, 'all')
-    roadm.wss_add_connections(conn_list)
+#     ## DEMUX configuration
+#     conn_list = operator_flex_grid_demux_connections(roadm, drop_list, open_channels=open_channels)
+#     roadm.wss_delete_connection(2, 'all')
+#     roadm.wss_add_connections(conn_list)
